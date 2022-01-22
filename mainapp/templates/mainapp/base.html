@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %} ">
+    {% endblock %}
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>
+        {% block title %}
+            {{ title|title }}
+        {% endblock %}
+    </title>
+    {% block js %}
+    {% endblock %}
+</head>
+<body>
+{%  block menu %}
+{% endblock %}
+        {% block content %}
+        {% endblock %}
+{%  block footer %}
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% load static %}
+<div class="menu">
+       <div class="menu-elements">
+        <ul class="menu-list">
+            <li {% if request.resolver_match.url_match == 'main' %} class="menu-element-pressed" {% else %} class="menu-element" {% endif %}><a class="menu-element-href"   href="{% url 'main' %}">News</a></li>
+            <li {% if request.resolver_match.url_match == 'playlists' %} class="menu-element-pressed" {% else %} class="menu-element" {% endif %}><a class="menu-element-href" href="{% url 'playlists' %}">Playlists</a></li>
+            <li {% if request.resolver_match.url_match == 'accounts' %} class="menu-element-pressed" {% else %} class="menu-element" {% endif %}><a class="menu-element-href" href="{% url 'accounts' %}">Connected accounts</a></li>
+            <li class="menu-element"><a href="#" class="menu-element-href">Settings</a></li>
+            <li class="log-out-element"><a class="menu-element-href" href="{% url 'register' %}">Log out</a></li>
+            <li {% if request.resolver_match.url_match == 'accounts' %} class="menu-element-pressed" {% else %} class="menu-element" {% endif %}><a class="menu-element-href" href="{% url 'account' %}">IRENE</a></li>
+            <li class="photo-element"><a href="{% url 'account' %}" ><img src="{% static 'img/ellipse.png' %}" alt="photo"></a></li>
+        </ul>
+    </div>
+</div>

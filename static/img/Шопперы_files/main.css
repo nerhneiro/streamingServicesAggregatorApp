@@ -1,0 +1,76 @@
+.menu-block {
+    width: 100%;
+    min-height: 112px;
+    background-color: #BBC396;
+}
+.menu-block-inside {
+    display: flex;
+    padding-top: 24px;
+    margin-left: 64px;
+}
+.menu-block-inside-logo {
+    flex-direction: row;
+    margin-right: 50px;
+}
+.menu-block-inside-bar {
+    flex-direction: row;
+}
+.menu-block-inside-bar ul {
+    list-style-type: none;
+}
+.menu-block-inside-bar li {
+    display: inline-block;
+    font-family: 'Arsenal', sans-serif;
+    font-size: 24px;
+    min-width: 118px;
+    line-height: 30.1px;
+}
+.menu-block-inside-bar li a {
+    text-decoration: none;
+    color: #FDFEFA;
+}
+.menu-block-inside-bar li a:hover {
+    text-decoration: underline;
+}
+
+/* PRODUCT CARDS */
+.catalog {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.product-card {
+    flex-direction: row;
+
+    height: 477px;
+    width: 214px;
+    background-color: #E7C7A1;
+    border-radius: 5px 5px 0px 0px;
+}
+/* FOOTER */
+.footer {
+    width: 100%;
+    min-height: 69px;
+    background-color: #BBC396;
+    margin-top: 50px;
+}
+.footer-inside {
+    display: flex;
+}
+.footer-inside p {
+    flex-direction: row;
+    font-family: 'Arsenal', sans-serif;
+    font-size: 24px;
+    min-width: 118px;
+    color: #FDFEFA;
+    line-height: 30.1px;
+    margin-left: 64px;
+}
+.footer-inside-socials {
+    flex-direction: row;
+    margin-left: 102px;
+    margin-top: 10px;
+}
+.footer-inside-socials img {
+    margin-right: 29px;
+}

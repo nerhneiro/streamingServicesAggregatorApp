@@ -1,0 +1,105 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block title %} Main {% endblock %}
+{%  block menu %}
+    <div class="menu">
+       <div class="menu-elements">
+        <ul class="menu-list">
+            <li class="menu-element"><a class="menu-element-href" href="{% url 'mainapp:main' %}">News</a></li>
+            <li class="menu-element"><a class="menu-element-href" href="{% url 'mainapp:playlists' %}">Albums</a></li>
+            <li class="menu-element"><a class="menu-element-href" href="{% url 'mainapp:accounts' %}">Connected accounts</a></li>
+            {% if authenticated %} <li class="menu-element"><a class="menu-element-pressed" href="{% url 'mainapp:friends' %}">Friends</a></li> {% endif %}
+            <li class="menu-element"><a href="{% url 'auth:edit' %}"  class="menu-element-href">Settings</a></li>
+            <li class="log-out-element"><a class="menu-element-href" href="{% url 'auth:logout' %}">{{ log_message}}</a></li>
+            {% if username != '' %}<li class="menu-element-name"><a href="{% url 'mainapp:account' %}">{{ username }}</a></li>
+            {% endif %}
+            <li class="photo-element"><a href="{% url 'mainapp:account' %}" ><img src="{% static 'img/gramophone.png' %}" alt="photo"></a></li>
+        </ul>
+    </div>
+    </div>
+{%  endblock %}
+{%  block content %}
+    <div class="friends-page-main">
+    <div class="friends-search-form-block">
+        <p class="friends-page-main-header">Search for friends</p>
+    <form class="friends_form" method="post" action="{% url 'mainapp:friends' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="friends-button" name="find">Find</button>
+    </form>
+    </div>
+
+    {% for f in friends_found %}
+        <div class="found-friends-block">
+        <div class="found-friends-block-inside"><p class="friend-username"><b>{{ f.username }}</b> {{ f.first_name }} {{ f.last_name }}</p> <a class='friend-button' href="{% url "mainapp:sendFriendRequest" f.pk %}">Send friend request</a>
+       </div>
+             </div>
+    {% endfor %}
+    {% if outgoingRequests|length > 0 %} <p class="friends-page-main-header">Outgoing requests: {{ outgoingRequests|length }}</p> {% endif %}
+    {% for i in outgoingRequests %}
+        <div class="outgoingRequests-block">
+        <p>REQUEST TO: <p class="friend-username"> {{ i.user_to }} </p></p>
+{#        <p>STATUS: {% if i.accepted %} Accepted {% else %} Unaccepted {% endif %}</p>#}
+        <a class='friend-button' href="{% url "mainapp:cancelFriendRequest" i.user_to.pk %}">Cancel request</a>
+        </div>
+        <br>
+    {% endfor %}
+    <br>
+    {% if unacceptedRequests|length > 0 %} <p class="friends-page-main-header">Unaccepted requests:  {{ unacceptedRequests|length }}</p> {% endif %}
+    {%  for i in unacceptedRequests %}
+        <div class="unacceptedRequest-block">
+        <p>REQUEST FROM: <p class="friend-username">{{ i.user_from }}</p></p>
+        <p>STATUS: {% if i.accepted %} Accepted {% else %} Unaccepted {% endif %}</p>
+        <a class='friend-button' href="{% url "mainapp:acceptFriendRequest" i.user_from.pk %}">Add friend</a>
+        <a class='friend-button' href="{% url "mainapp:declineFriendRequest" i.user_from.pk %}">Decline</a>
+        </div>
+    {% endfor %}
+    <br>
+
+    {% if friends|length > 0 %} <p class="friends-page-main-header">Friends: {{ friends|length }}</p> {% endif %}
+    {% for friend in friends %}
+        <div class="friend-block">
+        <div class="friend-block-inside">
+        <p class="friend-block-inside-name">{{ friend.username }}</p>
+           {% if friend.passwordYM !=  '' and friend.passwordYM != None and createdTags|length > 0 or friend.clientIdSP != '' and friend.clientIdSP != None and createdTags|length > 0 %} <p class="friend-block-inside-p-button"><a class='friend-button' href="{% url 'mainapp:shareTags' friend.pk %}">Share tags</a></p>
+               {% endif %} <p class="friend-block-inside-p-button"><a class='friend-button' href="{% url 'mainapp:deleteFriend' friend.pk %}">Delete from friends</a></p>
+        </div>
+        </div>
+    {% endfor %}
+    {% if tagShareRequestsUnaccepted|length > 0 %}
+    <p class="friends-page-main-header">Unaccepted tag requests:</p> {% endif %}
+    {% for req in tagShareRequestsUnaccepted %}
+        <div class="friend-block">
+        <div class="friend-block-inside">
+        <p class="friend-block-inside-name">
+            {{ req.user_from }}  {% for t in req.tags %} {{ t.name }}{% if not forloop.last %},  {% endif %} {% endfor %}</p>
+            <p class="friend-block-inside-p-button"><a href="{% url 'mainapp:acceptTags' req.pk %}" class="friend-button">Accept</a></p>
+            <p class="friend-block-inside-p-button"><a href="{% url 'mainapp:declineTags' req.pk %}" class="friend-button">Decline</a></p>
+        </div>
+        </div>
+    {% endfor %}
+    {% if tagShareRequestsSent|length > 0 %}
+    <p class="friends-page-main-header">Sent tag requests: {{ tagShareRequestsSent|length }}</p> {% endif %}
+    {% for req in tagShareRequestsSent %}
+        <div class="friend-block">
+        <div class="friend-block-inside">
+            <p class="friend-block-inside-name">{{ req.user_to }}  {% for t in req.tags %} {{ t.name }}{% if not forloop.last %},  {% endif %} {% endfor %}</p>
+            <p class="friend-block-inside-p-button"><a href="{% url 'mainapp:deleteTagRequest' req.pk %}" class="friend-button">Cancel</a></p>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{%  endblock %}
+{%  block footer %}
+    <div class="footer">
+    <div class="footer-inside">
+    <div class="contacts">
+        <p class="contacts-p">If you have any suggestions:</p>
+        <p class="contacts-gmail">nerhneiro@gmail.com</p>
+        <p class="contacts-github">Github: nerhneiro</p>
+        <p class="contacts-ig">Instagram: @nerhneiro</p>
+    </div>
+    </div>
+    </div>
+{% endblock %}
