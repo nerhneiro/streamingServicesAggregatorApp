@@ -10,4 +10,5 @@ Unite your libraries, create your own tags, add users to friends and sort your a
 - labels
 - tags
 - friends
-
+## Interaction with other users
+You can add other users to friends and share your favourite albums with them!
