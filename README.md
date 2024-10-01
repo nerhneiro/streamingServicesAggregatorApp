@@ -10,5 +10,9 @@ Unite your libraries, create your own tags, add users to friends and sort your a
 - labels
 - tags
 - friends
+
+Your tags are added as keys for sorting immediately.
 ## Interaction with other users
 You can add other users to friends and share your favourite albums with them!
+
+If a friend sends you a collection of the albums he has chosen, you can either accept them or decline them.
